@@ -97,6 +97,7 @@
         <select id="temperatureUnit">
             <option value="celsius">Celsius</option>
             <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
         </select>
         <br />
         <button onclick="convertToTemperature()">Convert to Bananas</button>
@@ -238,191 +239,214 @@
     <div class="result" id="result"></div>
 
     <script>
-        let currentMode = 'length';
+        const conversionRates = {
+            length: {
+                centimeters: 0.1,
+                inches: 0.25, // Fixed conversion rate
+                feet: 1,
+                meters: 1,
+                kilometers: 1000,
+                miles: 1609.34
+            },
+            sound: 0.01,
+            weight: {
+                grams: 0.01,
+                ounces: 0.02,
+                pounds: 0.1,
+                kilograms: 0.1,
+                tons: 100
+            },
+            time: {
+                seconds: 0.01,
+                minutes: 0.1,
+                hours: 1,
+                days: 10,
+                weeks: 50,
+                months: 200,
+                years: 2400
+            },
+            temperature: {
+                celsius: 0.5,
+                fahrenheit: 0.5,
+                kelvin: 0.5
+            },
+            volume: {
+                cubicCentimeters: 0.001,
+                cubicInches: 0.01,
+                cubicFeet: 0.1,
+                cubicMeters: 1,
+                cubicKilometers: 1000,
+                cubicMiles: 1609.34
+            },
+            electricity: {
+                watts: 0.01,
+                kilowatts: 0.1,
+                megawatts: 1
+            },
+            radiation: {
+                microsieverts: 0.001,
+                millisieverts: 0.01,
+                sieverts: 0.1
+            },
+            light: {
+                lux: 0.01,
+                footcandles: 0.1
+            },
+            pressure: {
+                pascals: 0.001,
+                atmospheres: 0.1,
+                bars: 0.1,
+                psi: 0.05
+            },
+            speed: {
+                metersPerSecond: 0.1,
+                kilometersPerHour: 0.1,
+                milesPerHour: 0.1,
+                feetPerSecond: 0.05
+            },
+            price: 1,
+            dataStorage: {
+                bytes: 0.0000001,
+                kilobytes: 0.00001,
+                megabytes: 0.001,
+                gigabytes: 0.1,
+                terabytes: 10
+            },
+            magneticField: {
+                teslas: 0.01,
+                gauss: 0.001
+            }
+        };
+
+        let currentMode = 'length'; // Default mode
 
         function toggleMode() {
-            const modes = ['length', 'sound', 'weight', 'time', 'temperature', 'volume', 'electricity', 'radiation', 'light', 'pressure', 'speed', 'price', 'dataStorage', 'magneticField'];
+            const modes = [
+                'length', 'sound', 'weight', 'time', 'temperature', 
+                'volume', 'electricity', 'radiation', 'light', 
+                'pressure', 'speed', 'price', 'dataStorage', 'magneticField'
+            ];
             const index = modes.indexOf(currentMode);
             currentMode = modes[(index + 1) % modes.length];
-            showCurrentMode();
+            updateVisibility();
         }
 
-        function showCurrentMode() {
-            const modes = ['lengthMode', 'soundMode', 'weightMode', 'timeMode', 'temperatureMode', 'volumeMode', 'electricityMode', 'radiationMode', 'lightMode', 'pressureMode', 'speedMode', 'priceMode', 'dataStorageMode', 'magneticFieldMode'];
-            modes.forEach(id => document.getElementById(id).style.display = 'none');
-            document.getElementById(`${currentMode}Mode`).style.display = 'block';
+        function updateVisibility() {
+            document.querySelectorAll('div[id$="Mode"]').forEach(div => {
+                div.style.display = div.id === `${currentMode}Mode` ? 'block' : 'none';
+            });
         }
 
         function convertToBananas() {
-            const value = parseFloat(document.getElementById('lengthValue').value);
-            const unit = document.getElementById('lengthUnit').value;
-            const conversionRates = {
-                centimeters: 0.01, // Example rate
-                inches: 0.0254, // Example rate
-                feet: 0.3048, // Example rate
-                meters: 1, // Example rate
-                kilometers: 1000, // Example rate
-                miles: 1609.34 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const value = parseFloat(document.getElementById(`${currentMode}Value`).value);
+            const unit = document.getElementById(`${currentMode}Unit`).value;
+            const rate = conversionRates[currentMode][unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToSound() {
             const value = parseFloat(document.getElementById('soundValue').value);
-            const bananas = value / 10; // Example rate
-            document.getElementById('result').textContent = `${value} dB = ${bananas.toFixed(2)} bananas`;
+            const bananas = value * conversionRates.sound;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToWeight() {
             const value = parseFloat(document.getElementById('weightValue').value);
             const unit = document.getElementById('weightUnit').value;
-            const conversionRates = {
-                grams: 0.001, // Example rate
-                ounces: 0.02835, // Example rate
-                pounds: 0.453592, // Example rate
-                kilograms: 1, // Example rate
-                tons: 1000 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.weight[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToTime() {
             const value = parseFloat(document.getElementById('timeValue').value);
             const unit = document.getElementById('timeUnit').value;
-            const conversionRates = {
-                seconds: 1, // Example rate
-                minutes: 60, // Example rate
-                hours: 3600, // Example rate
-                days: 86400, // Example rate
-                weeks: 604800, // Example rate
-                months: 2628000, // Example rate
-                years: 31536000 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.time[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToTemperature() {
             const value = parseFloat(document.getElementById('temperatureValue').value);
             const unit = document.getElementById('temperatureUnit').value;
-            const conversionRates = {
-                celsius: 1, // Example rate
-                fahrenheit: (value - 32) * 5 / 9 // Convert to Celsius first
-            };
-            const bananas = conversionRates[unit](value);
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.temperature[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToVolume() {
             const value = parseFloat(document.getElementById('volumeValue').value);
             const unit = document.getElementById('volumeUnit').value;
-            const conversionRates = {
-                cubicCentimeters: 0.001, // Example rate
-                cubicInches: 0.016387, // Example rate
-                cubicFeet: 0.0283168, // Example rate
-                cubicMeters: 1, // Example rate
-                cubicKilometers: 1e12, // Example rate
-                cubicMiles: 4.168e9 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.volume[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToElectricity() {
             const value = parseFloat(document.getElementById('electricityValue').value);
             const unit = document.getElementById('electricityUnit').value;
-            const conversionRates = {
-                watts: 0.001, // Example rate
-                kilowatts: 1, // Example rate
-                megawatts: 1000 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.electricity[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToRadiation() {
             const value = parseFloat(document.getElementById('radiationValue').value);
             const unit = document.getElementById('radiationUnit').value;
-            const conversionRates = {
-                microsieverts: 0.0001, // Example rate
-                millisieverts: 0.1, // Example rate
-                sieverts: 100 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.radiation[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToLight() {
             const value = parseFloat(document.getElementById('lightValue').value);
             const unit = document.getElementById('lightUnit').value;
-            const conversionRates = {
-                lux: 0.001, // Example rate
-                footcandles: 0.1 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.light[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToPressure() {
             const value = parseFloat(document.getElementById('pressureValue').value);
             const unit = document.getElementById('pressureUnit').value;
-            const conversionRates = {
-                pascals: 0.0001, // Example rate
-                atmospheres: 1, // Example rate
-                bars: 1, // Example rate
-                psi: 0.0689476 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.pressure[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToSpeed() {
             const value = parseFloat(document.getElementById('speedValue').value);
             const unit = document.getElementById('speedUnit').value;
-            const conversionRates = {
-                metersPerSecond: 1, // Example rate
-                kilometersPerHour: 0.277778, // Example rate
-                milesPerHour: 0.44704, // Example rate
-                feetPerSecond: 0.3048 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.speed[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToPrice() {
             const value = parseFloat(document.getElementById('priceValue').value);
-            const bananas = value; // 1 dollar = 1 banana
-            document.getElementById('result').textContent = `${value} dollars = ${bananas.toFixed(2)} bananas`;
+            const bananas = value * conversionRates.price;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToDataStorage() {
             const value = parseFloat(document.getElementById('dataStorageValue').value);
             const unit = document.getElementById('dataStorageUnit').value;
-            const conversionRates = {
-                bytes: 1 / 1e9, // Example rate (1 GB = 1e9 bytes)
-                kilobytes: 1 / 1e6, // Example rate (1 GB = 1e6 KB)
-                megabytes: 1 / 1e3, // Example rate (1 GB = 1e3 MB)
-                gigabytes: 1, // Example rate
-                terabytes: 1000 // Example rate
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.dataStorage[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
         function convertToMagneticField() {
             const value = parseFloat(document.getElementById('magneticFieldValue').value);
             const unit = document.getElementById('magneticFieldUnit').value;
-            const conversionRates = {
-                teslas: 1, // Example rate
-                gauss: 0.0001 // Example rate (1 Gauss = 0.0001 Tesla)
-            };
-            const bananas = value * conversionRates[unit];
-            document.getElementById('result').textContent = `${value} ${unit} = ${bananas.toFixed(2)} bananas`;
+            const rate = conversionRates.magneticField[unit];
+            const bananas = value * rate;
+            document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
-        document.addEventListener('DOMContentLoaded', showCurrentMode);
+        // Initialize
+        updateVisibility();
     </script>
 </body>
 </html>
