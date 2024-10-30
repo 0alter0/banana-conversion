@@ -1,1 +1,0 @@
-// to all the skids who this may concern, make this shit yourself. You probally won't see this BUT if I find this HTML code being used in something that isn't made by me, I'm adding an IP logger to this site.
