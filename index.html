@@ -26,7 +26,6 @@
     <h1>Convert Units to Bananas</h1>
     <button onclick="toggleMode()">Toggle Mode</button>
 
-    <!-- Length Mode -->
     <div id="lengthMode">
         <label for="lengthValue">Enter Value:</label>
         <input type="number" id="lengthValue" step="any" />
@@ -44,7 +43,6 @@
         <button onclick="convertToBananas()">Convert to Bananas</button>
     </div>
 
-    <!-- Sound Mode -->
     <div id="soundMode" style="display: none">
         <label for="soundValue">Enter Value in Decibels:</label>
         <input type="number" id="soundValue" step="any" />
@@ -52,7 +50,6 @@
         <button onclick="convertToSound()">Convert to Bananas</button>
     </div>
 
-    <!-- Weight Mode -->
     <div id="weightMode" style="display: none">
         <label for="weightValue">Enter Value:</label>
         <input type="number" id="weightValue" step="any" />
@@ -69,7 +66,6 @@
         <button onclick="convertToWeight()">Convert to Bananas</button>
     </div>
 
-    <!-- Time Mode -->
     <div id="timeMode" style="display: none">
         <label for="timeValue">Enter Value:</label>
         <input type="number" id="timeValue" step="any" />
@@ -88,7 +84,6 @@
         <button onclick="convertToTime()">Convert to Bananas</button>
     </div>
 
-    <!-- Temperature Mode -->
     <div id="temperatureMode" style="display: none">
         <label for="temperatureValue">Enter Value:</label>
         <input type="number" id="temperatureValue" step="any" />
@@ -103,7 +98,6 @@
         <button onclick="convertToTemperature()">Convert to Bananas</button>
     </div>
 
-    <!-- Volume Mode -->
     <div id="volumeMode" style="display: none">
         <label for="volumeValue">Enter Value:</label>
         <input type="number" id="volumeValue" step="any" />
@@ -121,7 +115,6 @@
         <button onclick="convertToVolume()">Convert to Bananas</button>
     </div>
 
-    <!-- Electricity Mode -->
     <div id="electricityMode" style="display: none">
         <label for="electricityValue">Enter Value:</label>
         <input type="number" id="electricityValue" step="any" />
@@ -136,7 +129,6 @@
         <button onclick="convertToElectricity()">Convert to Bananas</button>
     </div>
 
-    <!-- Radiation Mode -->
     <div id="radiationMode" style="display: none">
         <label for="radiationValue">Enter Value:</label>
         <input type="number" id="radiationValue" step="any" />
@@ -151,7 +143,6 @@
         <button onclick="convertToRadiation()">Convert to Bananas</button>
     </div>
 
-    <!-- Light Mode -->
     <div id="lightMode" style="display: none">
         <label for="lightValue">Enter Value:</label>
         <input type="number" id="lightValue" step="any" />
@@ -165,7 +156,6 @@
         <button onclick="convertToLight()">Convert to Bananas</button>
     </div>
 
-    <!-- Pressure Mode -->
     <div id="pressureMode" style="display: none">
         <label for="pressureValue">Enter Value:</label>
         <input type="number" id="pressureValue" step="any" />
@@ -181,7 +171,6 @@
         <button onclick="convertToPressure()">Convert to Bananas</button>
     </div>
 
-    <!-- Speed Mode -->
     <div id="speedMode" style="display: none">
         <label for="speedValue">Enter Value:</label>
         <input type="number" id="speedValue" step="any" />
@@ -197,7 +186,6 @@
         <button onclick="convertToSpeed()">Convert to Bananas</button>
     </div>
 
-    <!-- Price Mode -->
     <div id="priceMode" style="display: none">
         <label for="priceValue">Enter Value in Dollars:</label>
         <input type="number" id="priceValue" step="any" />
@@ -205,7 +193,6 @@
         <button onclick="convertToPrice()">Convert to Bananas</button>
     </div>
 
-    <!-- Data Storage Mode -->
     <div id="dataStorageMode" style="display: none">
         <label for="dataStorageValue">Enter Value:</label>
         <input type="number" id="dataStorageValue" step="any" />
@@ -222,7 +209,6 @@
         <button onclick="convertToDataStorage()">Convert to Bananas</button>
     </div>
 
-    <!-- Magnetic Field Mode -->
     <div id="magneticFieldMode" style="display: none">
         <label for="magneticFieldValue">Enter Value:</label>
         <input type="number" id="magneticFieldValue" step="any" />
@@ -242,7 +228,7 @@
         const conversionRates = {
             length: {
                 centimeters: 0.1,
-                inches: 0.25, // Fixed conversion rate
+                inches: 0.25,
                 feet: 1,
                 meters: 1,
                 kilometers: 1000,
@@ -318,7 +304,7 @@
             }
         };
 
-        let currentMode = 'length'; // Default mode
+        let currentMode = 'length';
 
         function toggleMode() {
             const modes = [
@@ -445,7 +431,6 @@
             document.getElementById('result').textContent = `Result: ${bananas} bananas`;
         }
 
-        // Initialize
         updateVisibility();
     </script>
 </body>
